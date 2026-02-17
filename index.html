@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gayrage | Auto body Sandton</title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ================= THEME VARIABLES ================= */
+        :root{
+            --bg:#eef7fb;
+            --card:#ffffff;
+            --text:#1f2a33;
+            --primary:#4fb6d6;
+            --soft:#d8f2fb;
+            --border:#a7d8ea;
+        }
+        body.dark{
+            --bg:#0f1720;
+            --card:#18222c;
+            --text:#e6f3f9;
+            --primary:#4fb6d6;
+            --soft:#12202a;
+            --border:#2a4b5b;
+        }
+        *{box-sizing:border-box; margin:0; padding:0;}
+        body{
+            font-family:Inter, sans-serif;
+            background:var(--bg);
+            color:var(--text);
+            transition:.3s;
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+        }
+        .container{ max-width:1100px; margin:auto; padding:2rem; width:100%; }
+
+        /* ================= HEADER ================= */
+        .header{
+            display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center;
+            margin-bottom:2rem; gap:1rem;
+        }
+        .logo{ 
+            display:flex; align-items:center; gap:10px;
+            font-size:2rem; font-weight:700; 
+        }
+        .logo i{ 
+            color:var(--primary); 
+            background:var(--soft); 
+            padding:0.5rem; 
+            border-radius:50%; 
+            border:2px solid var(--border);
+        }
+        .actions{
+            display:flex; flex-wrap:wrap; gap:0.5rem;
+        }
+        .actions button, .actions a{
+            padding:0.6rem 1.2rem; border-radius:30px; border:1px solid var(--border);
+            background:var(--card); cursor:pointer; text-decoration:none; color:var(--text);
+            font-size:0.95rem; transition:0.2s;
+        }
+        .actions button:hover, .actions a:hover{
+            background:var(--primary); color:white;
+        }
+
+        /* ================= CARDS & SECTIONS ================= */
+        .hero, .info, .review-box{
+            background:var(--card); padding:2rem; border-radius:25px; border:1px solid var(--border);
+            margin-bottom:2rem;
+        }
+        .hero h2{ margin-bottom:0.5rem; }
+
+        /* ================= SERVICES GRID ================= */
+        .services, .gallery{
+            display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1rem; margin-top:1rem;
+        }
+        .service-card{
+            background:var(--soft); border-radius:20px; overflow:hidden;
+        }
+        .service-card img{
+            width:100%; height:180px; object-fit:cover;
+        }
+        .service-card div{ padding:1rem; }
+
+        /* ================= GALLERY (UPDATED IMAGES) ================= */
+        .gallery img{
+            width:100%; height:200px; object-fit:cover; border-radius:15px;
+            border:2px solid var(--border);
+        }
+
+        /* ================= REVIEWS ================= */
+        .review{
+            background:var(--soft); padding:1rem; border-radius:15px; margin-top:1rem;
+        }
+
+        /* ================= FORM ELEMENTS ================= */
+        input, textarea, select{
+            width:100%; padding:0.8rem; margin:0.5rem 0; border-radius:12px;
+            border:1px solid var(--border); background:var(--bg); color:var(--text);
+        }
+        button{
+            background:var(--primary); color:white; border:none; padding:0.8rem 2rem;
+            border-radius:40px; font-weight:600; cursor:pointer; transition:0.2s;
+        }
+        button:hover{ opacity:0.85; transform:scale(1.02); }
+
+        /* ================= MAP ================= */
+        .map iframe{ width:100%; height:300px; border-radius:20px; border:0; }
+
+        /* ================= WELCOME PAGE OVERLAY ================= */
+        .welcome-overlay{
+            position:fixed; top:0; left:0; width:100%; height:100%;
+            background:var(--bg); z-index:1000; display:flex;
+            align-items:center; justify-content:center; transition:0.4s;
+            overflow:hidden; /* for particles */
+        }
+        .welcome-card{
+            max-width:700px; background:var(--card); border-radius:50px; padding:4rem 3rem;
+            border:3px solid var(--border); text-align:center; margin:1.5rem;
+            position:relative; z-index:10;
+            box-shadow:0 20px 40px rgba(0,0,0,0.15);
+        }
+        .welcome-card h1{ 
+            font-size:4rem; margin-bottom:1rem;
+            display:flex; align-items:center; justify-content:center; gap:15px;
+        }
+        .welcome-card h1 i{
+            color:var(--primary); background:var(--soft); padding:0.8rem;
+            border-radius:50%; border:2px solid var(--border);
+        }
+        .lead{ font-size:1.4rem; margin-bottom:2rem; }
+        .address-badge{
+            background:var(--soft); padding:1rem 2rem; border-radius:60px;
+            border:1px solid var(--border); margin-bottom:2.5rem; font-size:1.2rem;
+        }
+        .enter-btn{
+            display:inline-block; padding:1.2rem 3rem; border-radius:60px;
+            background:var(--primary); color:white; text-decoration:none;
+            font-weight:700; font-size:1.3rem; transition:0.2s; border:none; cursor:pointer;
+        }
+        .enter-btn:hover{ background:var(--text); color:var(--bg); }
+
+        /* ================= WELCOME PAGE PARTICLES (FEW, SUBTLE) ================= */
+        #particle-canvas{
+            position:absolute; top:0; left:0; width:100%; height:100%;
+            pointer-events:none; z-index:1;
+        }
+
+        /* ================= FIXED THEME BUTTON ================= */
+        .theme-btn{
+            position:fixed; bottom:25px; left:25px; width:60px; height:60px;
+            border-radius:50%; display:flex; align-items:center; justify-content:center;
+            background:var(--card); border:2px solid var(--border); cursor:pointer;
+            z-index:2000; font-size:1.5rem;
+        }
+
+        /* ================= CHATBOT ================= */
+        .chat-btn{
+            position:fixed; bottom:25px; right:25px; width:70px; height:70px;
+            border-radius:50%; background:var(--primary); color:white;
+            display:flex; align-items:center; justify-content:center;
+            font-size:2rem; cursor:pointer; border:3px solid var(--card);
+            z-index:2000; box-shadow:0 5px 20px rgba(0,0,0,0.2);
+            transition:0.2s;
+        }
+        .chat-btn:hover{ transform:scale(1.1); background:var(--text); }
+        .chat-panel{
+            position:fixed; bottom:110px; right:25px; width:320px;
+            background:var(--card); border:2px solid var(--border); border-radius:30px;
+            padding:1.2rem; z-index:1999; display:none; box-shadow:0 10px 30px rgba(0,0,0,0.2);
+        }
+        .chat-panel.show{ display:block; }
+        .chat-header{
+            display:flex; justify-content:space-between; align-items:center;
+            border-bottom:1px solid var(--border); padding-bottom:0.5rem; margin-bottom:1rem;
+        }
+        .chat-close{
+            background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--text);
+        }
+        .chat-msgs{
+            min-height:150px; max-height:200px; overflow-y:auto; margin-bottom:1rem;
+            background:var(--soft); padding:0.8rem; border-radius:15px;
+        }
+        .chat-msg{
+            background:var(--card); padding:0.5rem 1rem; border-radius:15px; margin-bottom:0.5rem;
+            max-width:85%; border:1px solid var(--border);
+        }
+        .chat-msg.user{
+            background:var(--primary); color:white; margin-left:auto;
+        }
+        .chat-input{
+            display:flex; gap:0.5rem;
+        }
+        .chat-input input{
+            flex:1; border:1px solid var(--border); border-radius:30px; padding:0.6rem 1rem;
+        }
+        .chat-input button{
+            padding:0.6rem 1.2rem; border-radius:30px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== WELCOME OVERLAY WITH PARTICLES ========== -->
+    <div id="welcomeOverlay" class="welcome-overlay">
+        <canvas id="particle-canvas"></canvas>
+        <div class="welcome-card">
+            <h1><i class="fas fa-tools"></i> The Gayrage</h1>
+            <p class="lead">Auto body · custom paint · precision repair</p>
+            <div class="address-badge">
+                <i class="fas fa-map-pin" style="margin-right:8px;"></i>
+                20 Berkeley Ave, Bryanston, Johannesburg
+            </div>
+            <button id="enterMainBtn" class="enter-btn"><i class="fas fa-arrow-right" style="margin-right:10px;"></i>Enter site</button>
+            <p style="margin-top:2rem; opacity:0.7;">Mon–Sat: 8am–6pm | 066 566 9001</p>
+        </div>
+    </div>
+
+    <!-- ========== MAIN SITE ========== -->
+    <div id="mainSite" style="display:none; width:100%;">
+        <div class="container">
+
+            <!-- header with logo and action buttons -->
+            <div class="header">
+                <div class="logo"><i class="fas fa-tools"></i> THE GAYRAGE</div>
+                <div class="actions">
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=20+Berkeley+Ave+Bryanston" target="_blank" title="Directions"><i class="fas fa-map"></i> Directions</a>
+                    <button onclick="shareSite()" title="Share"><i class="fas fa-share-alt"></i> Share</button>
+                    <button onclick="saveBusiness()" title="Save"><i class="fas fa-bookmark"></i> Save</button>
+                    <a href="tel:0665669001" title="Call"><i class="fas fa-phone"></i> Call</a>
+                </div>
+            </div>
+
+            <!-- hero with live status -->
+            <div class="hero">
+                <h2>Auto body shop in Sandton</h2>
+                <p id="status"></p>
+            </div>
+
+            <!-- business info card -->
+            <div class="info">
+                <h3>Business Info</h3>
+                <p><strong>Address:</strong> 20 Berkeley Ave, Bryanston, Johannesburg, 2191</p>
+                <p><strong>Phone:</strong> 066 566 9001</p>
+                <h3 style="margin-top:1rem">Opening Hours</h3>
+                <p>Mon–Fri: 8am – 6pm</p>
+                <p>Sat: 9am – 3pm</p>
+                <p>Sun: Closed</p>
+            </div>
+
+            <!-- services cards -->
+            <div class="info">
+                <h3>Our Services</h3>
+                <div class="services">
+                    <div class="service-card">
+                        <img src="1.jpg" alt="collision repair">
+                        <div><h4>Collision Repair</h4><p>Full structural restoration after accidents.</p></div>
+                    </div>
+                    <div class="service-card">
+                        <img src="2.jpg" alt="custom paint">
+                        <div><h4>Custom Paint</h4><p>Professional colour matching & spray finishing.</p></div>
+                    </div>
+                    <div class="service-card">
+                        <img src="3.jpg" alt="dent removal">
+                        <div><h4>Dent Removal</h4><p>Restore smooth panels and perfect body lines.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- reviews & form -->
+            <div class="review-box">
+                <h3>Google Reviews</h3>
+                <div id="rating"></div>
+                <div id="reviews"></div>
+
+                <h3 style="margin-top:1.5rem">Leave a review</h3>
+                <select id="stars">
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="3">★★★</option>
+                    <option value="2">★★</option>
+                    <option value="1">★</option>
+                </select>
+                <textarea id="reviewText" placeholder="Write your review..."></textarea>
+                <button onclick="addReview()">Submit review</button>
+            </div>
+
+            <!-- contact form -->
+            <div class="info">
+                <h3>Contact Us</h3>
+                <input id="contactName" placeholder="Your name">
+                <input id="contactEmail" placeholder="Email">
+                <textarea id="contactMsg" placeholder="Message"></textarea>
+                <button onclick="alert('Message sent (demo)')">Send</button>
+            </div>
+
+            <!-- map -->
+            <div class="map">
+                <iframe src="https://www.google.com/maps?q=20+Berkeley+Ave+Bryanston&output=embed"></iframe>
+            </div>
+        </div> <!-- container -->
+    </div> <!-- mainSite -->
+
+    <!-- fixed theme toggle button -->
+    <div class="theme-btn" id="themeBtn"><i class="fas fa-moon"></i></div>
+
+    <!-- chatbot button and panel -->
+    <div class="chat-btn" id="chatBtn"><i class="fas fa-comment"></i></div>
+    <div class="chat-panel" id="chatPanel">
+        <div class="chat-header">
+            <span><i class="fas fa-robot"></i> Gayrage Assistant</span>
+            <button class="chat-close" id="chatClose"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-msgs" id="chatMessages">
+            <div class="chat-msg">Hi! Ask about our services, hours, or quote.</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type a message...">
+            <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ----- WELCOME OVERLAY & MAIN SITE -----
+            const welcome = document.getElementById('welcomeOverlay');
+            const mainSite = document.getElementById('mainSite');
+            const enterBtn = document.getElementById('enterMainBtn');
+
+            if (sessionStorage.getItem('entered') === 'true') {
+                welcome.style.display = 'none';
+                mainSite.style.display = 'block';
+            } else {
+                welcome.style.display = 'flex';
+                mainSite.style.display = 'none';
+            }
+
+            enterBtn.addEventListener('click', function() {
+                welcome.style.display = 'none';
+                mainSite.style.display = 'block';
+                sessionStorage.setItem('entered', 'true');
+            });
+
+            // ----- THEME TOGGLE -----
+            const themeBtn = document.getElementById('themeBtn');
+            if (localStorage.theme === 'dark') {
+                document.body.classList.add('dark');
+                themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            themeBtn.onclick = () => {
+                document.body.classList.toggle('dark');
+                const isDark = document.body.classList.contains('dark');
+                localStorage.theme = isDark ? 'dark' : 'light';
+                themeBtn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            };
+
+            // ----- OPEN STATUS -----
+            const hour = new Date().getHours();
+            const statusEl = document.getElementById('status');
+            if (statusEl) {
+                statusEl.textContent = (hour >= 8 && hour < 18) ? '🔵 Open now' : '⚫ Closed now';
+            }
+
+            // ----- SHARE & SAVE -----
+            window.shareSite = function() {
+                if (navigator.share) {
+                    navigator.share({ title: 'The Gayrage', url: location.href });
+                } else {
+                    alert('Share not supported — you can copy the link manually.');
+                }
+            };
+            window.saveBusiness = function() {
+                localStorage.saved = 'true';
+                alert('Business saved locally!');
+            };
+
+            // ----- REVIEWS -----
+            let reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
+            function renderReviews() {
+                const box = document.getElementById('reviews');
+                const ratingDiv = document.getElementById('rating');
+                if (!box || !ratingDiv) return;
+                box.innerHTML = '';
+                let total = 0;
+                reviews.forEach(r => {
+                    total += r.stars;
+                    box.innerHTML += `
+                        <div class="review">
+                            ${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}
+                            <p style="margin-top:5px;">${r.text}</p>
+                        </div>`;
+                });
+                const avg = reviews.length ? (total / reviews.length).toFixed(1) : '0.0';
+                ratingDiv.textContent = `⭐ Rating: ${avg} (${reviews.length} review${reviews.length!==1?'s':''})`;
+            }
+            window.addReview = function() {
+                const stars = Number(document.getElementById('stars').value);
+                const text = document.getElementById('reviewText').value.trim();
+                if (!text) return alert('Please write a review.');
+                reviews.push({ stars, text });
+                localStorage.setItem('reviews', JSON.stringify(reviews));
+                document.getElementById('reviewText').value = '';
+                renderReviews();
+            };
+            renderReviews();
+
+            // ----- WELCOME PAGE PARTICLES (few, subtle) -----
+            const canvas = document.getElementById('particle-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width, height;
+                let particles = [];
+
+                function resizeCanvas() {
+                    width = window.innerWidth;
+                    height = window.innerHeight;
+                    canvas.width = width;
+                    canvas.height = height;
+                }
+
+                function initParticles() {
+                    particles = [];
+                    const count = 12; // very few
+                    for (let i = 0; i < count; i++) {
+                        particles.push({
+                            x: Math.random(),
+                            y: Math.random(),
+                            size: 2 + Math.random() * 4,
+                            speedX: (Math.random() - 0.5) * 0.0015,
+                            speedY: (Math.random() - 0.5) * 0.0015,
+                            opacity: 0.3 + Math.random() * 0.4
+                        });
+                    }
+                }
+
+                function drawParticles() {
+                    ctx.clearRect(0, 0, width, height);
+                    for (let p of particles) {
+                        p.x += p.speedX;
+                        p.y += p.speedY;
+                        if (p.x < 0) p.x = 1;
+                        if (p.x > 1) p.x = 0;
+                        if (p.y < 0) p.y = 1;
+                        if (p.y > 1) p.y = 0;
+
+                        const screenX = p.x * width;
+                        const screenY = p.y * height;
+
+                        ctx.beginPath();
+                        ctx.arc(screenX, screenY, p.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(79, 182, 214, ${p.opacity})`; // primary color
+                        ctx.fill();
+                    }
+                    requestAnimationFrame(drawParticles);
+                }
+
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+                initParticles();
+                drawParticles();
+            }
+
+            // ----- CHATBOT -----
+            const chatBtn = document.getElementById('chatBtn');
+            const chatPanel = document.getElementById('chatPanel');
+            const chatClose = document.getElementById('chatClose');
+            const chatSend = document.getElementById('chatSend');
+            const chatInput = document.getElementById('chatInput');
+            const chatMessages = document.getElementById('chatMessages');
+
+            function addChatMessage(text, isUser = false) {
+                const msg = document.createElement('div');
+                msg.classList.add('chat-msg');
+                if (isUser) msg.classList.add('user');
+                msg.textContent = text;
+                chatMessages.appendChild(msg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function getBotReply(userMsg) {
+                const lower = userMsg.toLowerCase();
+                if (lower.includes('hour') || lower.includes('open')) return "We're open Mon–Sat 8am–6pm, today closes 6pm.";
+                if (lower.includes('phone') || lower.includes('call')) return "Call us at 066 566 9001.";
+                if (lower.includes('address')) return "20 Berkeley Ave, Bryanston, Johannesburg.";
+                if (lower.includes('paint')) return "Yes, we do custom painting and colour matching!";
+                if (lower.includes('dent') || lower.includes('repair')) return "We handle dent removal and collision repair.";
+                return "I'll help you! For now, please call 066 566 9001.";
+            }
+
+            chatBtn.addEventListener('click', () => {
+                chatPanel.classList.toggle('show');
+            });
+            chatClose.addEventListener('click', () => {
+                chatPanel.classList.remove('show');
+            });
+            chatSend.addEventListener('click', () => {
+                const txt = chatInput.value.trim();
+                if (!txt) return;
+                addChatMessage(txt, true);
+                chatInput.value = '';
+                setTimeout(() => {
+                    addChatMessage(getBotReply(txt));
+                }, 400);
+            });
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') chatSend.click();
+            });
+        })();
+    </script>
+</body>
+</html>
